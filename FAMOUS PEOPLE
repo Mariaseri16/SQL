@@ -1,0 +1,62 @@
+CREATE TABLE ARTISTS (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+   full_name TEXT, 
+    age INTEGER, song_title TEXT, marrital_status TEXT, country Text);
+    
+INSERT INTO ARTISTS (full_name, age, song_title, Marrital_status, country) VALUES ("Taylor swift", "35", "back to december", "single", "United states");
+INSERT INTO ARTISTS (full_name, age, song_title, marrital_status, country) VALUES ("Selena gomez", "30", "single soon", "single", "United states");
+INSERT INTO ARTISTS (full_name, age, song_title, Marrital_status, country) VALUES ("Justin bieber", "36", "Love yourself", "Married", "Australia");
+INSERT INTO ARTISTS (full_name, age, song_title, Marrital_status, country) VALUES ("Bruno mars", "30", "Marry me", "Married", "England");
+INSERT INTO ARTISTS (full_name, age, song_title, Marrital_status, country) VALUES ("Adele", "30", "All i ask", "Married", "United states");
+INSERT INTO ARTISTS (full_name, age, song_title, Marrital_status, country) VALUES ("Ariana grande", "29", "Die for you", "Married", "England");
+INSERT INTO ARTISTS (full_name, age, song_title, Marrital_status, country) VALUES ("Arilaso", "40", "You are my love", "Married",
+"England");
+INSERT INTO ARTISTS (full_name, age, song_title, Marrital_status, country) VALUES ("Dua lipa", "35", "Mamamia", "Married", "United states");
+INSERT INTO ARTISTS (full_name, age, song_title, Marrital_status, country) VALUES ("Harry styles", "35", "Running", "Single", "Australia");
+INSERT INTO ARTISTS (full_name, age, song_title, Marrital_status, country) VALUES ("James arthur", "35", "My love", "Married", "Canada");
+INSERT INTO ARTISTS (full_name, age, song_title, Marrital_status, country) VALUES ("Dua lipa", "35", "Mamamia", "Married", "United states");
+INSERT INTO ARTISTS (full_name, age, song_title, Marrital_status, country) VALUES ("Kendal jenner", "29", "Kitty kitty", "Married", "United states");
+INSERT INTO ARTISTS (full_name, age, song_title, Marrital_status, country) VALUES ("Kyle kadarsian", "39", "Oh yeah", "Married", "United states");
+INSERT INTO ARTISTS (full_name, age, song_title, Marrital_status, country) VALUES ("Zayn malik", "30", "I'm Good", "Married", "Canada");
+INSERT INTO ARTISTS (full_name, age, song_title, Marrital_status, country) VALUES ("Louis", "29", "My girl", "Single", "United states");
+
+
+
+CREATE table movies (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+   movie_title TEXT, name TEXT, hobbies TEXT);
+  INSERT INTO movies (name, movie_title, hobbies) VALUES ("Arilaso", "hantu di sekolah", "Volleyball");
+   INSERT INTO movies (name, movie_title, hobbies) VALUES ("Taylor swift", "Valentine", "Running");
+   INSERT INTO movies (name, movie_title, hobbies) VALUES ("Justin bieber", "gorilla", "Traveling");
+   INSERT INTO movies (name, movie_title, hobbies) VALUES ("Demi lavota", "New york", "Dancing");
+   INSERT INTO movies (name, movie_title, hobbies) VALUES ("Harry styles", "Mine mine", "Dancing");
+   INSERT INTO movies (name, movie_title, hobbies) VALUES ("Dua lipa", "Bestie", "Traveling");
+   INSERT INTO movies (name, movie_title, hobbies) VALUES ("Kyle kadarsian", "Meow", "Reading");
+   INSERT INTO movies (name, movie_title, hobbies) VALUES ("Louis", "New york", "Volleyball");
+   INSERT INTO movies (name, movie_title, hobbies) VALUES ("Zayn malik", "Kiss you", "Shopping");
+   INSERT INTO movies (name, movie_title, hobbies) VALUES ("Kendall jenner", "Meow", "Dancing");
+   
+   
+   
+   
+  #Show full name and movie name from singer that also a movie star
+  SELECT A.full_name, m.movie_title
+   FROM ARTISTS A
+   INNER JOIN movies m
+   ON A.full_name=m.name
+#SHOW the hobbies of the artists and their country name , use order by country
+ SELECT A.full_name, m.hobbies
+   FROM ARTISTS A
+   LEFT JOIN movies m
+   ON A.full_name=m.name
+   ORDER BY country
+
+   
+   
+  
+
+
+   
+
+   
+   
