@@ -50,6 +50,12 @@ CREATE table movies (
    LEFT JOIN movies m
    ON A.full_name=m.name
    ORDER BY country
+#Show artist's hobbies that also a movie start who come from England
+SELECT A.full_name, m.hobbies
+   FROM ARTISTS A
+   INNER JOIN movies m
+   ON A.full_name=m.name
+   WHERE country="England"
 
    
    
