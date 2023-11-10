@@ -45,6 +45,12 @@ avg(quantity*price)
 FROM BIT_DB.FebSales Feb
 LEFT JOIN BIT_DB.customers cust
 ON FEB.orderid=cust.order_id
+
+#Show stastic how much product sold in Los Angeles and how many each product were sold
+Select product, Sum(Quantity)
+FROM BIT_DB.FebSales
+Where location like '%Los Angeles%'
+GROUP by product
 WHERE Feb.Quantity>2
 AND length(orderid) = 6
 AND orderid <> 'Order ID';
