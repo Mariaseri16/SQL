@@ -1,20 +1,49 @@
+#In this porject, I downloaded Spotify data from Kaggle and imported into a new table i created. FInally, i used SQL  to perform analytics
+
+#How to create the table
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+song_key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+song_mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness decimal(8,7) NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL )
+
 SELECT *
 FROM BIT_DB.Spotifydata
 
-SELECT artist_name, track_name, popularity
+#Which artists had popularity over 90 and how many
+SELECT artist_name, count (track_name)
 FROM BIT_DB.Spotifydata
-WHERE popularity>=90 
-Order by popularity
+GROUP BY artist_name
+Having popularity>90 
+Order by artist_name ASC
 
-SELECT artist_name
+#Which artists had popularity over 90 and duration more than 200000 and how many
+SSELECT artist_name, count(track_name)
 FROM BIT_DB.Spotifydata
-WHERE popularity>90
+GROUP by artist_name
+HAVING popularity>90
 AND duration_ms >200000
 Order by artist_name
 
+# Who is artist that has a highest popularity
 SELECT MAX(popularity), artist_name
 FROM BIT_DB.Spotifydata
 
+#Show statics which artist is popular, almost popular and no info using case statement
 SELECT artist_name, popularity,
 CASE WHEN popularity >= 90 THEN "popular"
 WHEN popularity >=80 THEN "almost popular"
@@ -23,10 +52,11 @@ END as popularityinfo
 FROM BIT_DB.Spotifydata
 ORDER BY artist_name 
 
-SELECT artist_name, Count(artist_name)
+#which artist that has more than 2 track name
+SELECT artist_name, Count(track_name)
 FROM BIT_DB.Spotifydata
 GROUP BY artist_name
-HAVING Count(artist_name) >2
+HAVING Count(track_name) >2
 Order by artist_name
 
 SELECT track_name
