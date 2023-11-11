@@ -1,0 +1,34 @@
+SELECT *
+FROM BIT_DB.Spotifydata
+
+SELECT artist_name, track_name, popularity
+FROM BIT_DB.Spotifydata
+WHERE popularity>=90 
+Order by popularity
+
+SELECT artist_name
+FROM BIT_DB.Spotifydata
+WHERE popularity>90
+AND duration_ms >200000
+Order by artist_name
+
+SELECT MAX(popularity), artist_name
+FROM BIT_DB.Spotifydata
+
+SELECT artist_name, popularity,
+CASE WHEN popularity >= 90 THEN "popular"
+WHEN popularity >=80 THEN "almost popular"
+ELSE "no info"
+END as popularityinfo
+FROM BIT_DB.Spotifydata
+ORDER BY artist_name 
+
+SELECT artist_name, Count(artist_name)
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+HAVING Count(artist_name) >2
+Order by artist_name
+
+SELECT track_name
+FROM BIT_DB.Spotifydata
+WHERE artist_name like '%olivia%'
