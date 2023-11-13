@@ -1,0 +1,116 @@
+SELECT FirstName, LastName, CustomerId, Country
+FROM chinook.customers
+WHERE Country != 'USA'
+Order by Country
+
+SELECT *
+FROM chinook.customers
+WHERE Country = 'Brazil'
+
+
+Select Cust.FirstName, Cust.LastName, Inv.InvoiceId, Inv.InvoiceDate, Inv.BillingCountry
+FROM chinook.customers Cust
+LEFT JOIN chinook.invoices Inv
+ON Cust.CustomerId=Inv.CUstomerId
+WHERE Country='Brazil'
+Order by FirstName ASC
+
+SELECT *
+FROM chinook.employees
+WHERE Title = 'IT Staff'
+
+SELECT DISTINCT BillingAddress AS BillingCountry
+FROM Invoices;
+
+SELECT
+    e.EmployeeId,
+    e.FirstName || ' ' || e.LastName AS SalesAgentName,
+    i.InvoiceId,
+    i.CustomerId,
+    i.InvoiceDate,
+    i.BillingAddress,
+    i.BillingCity,
+    i.BillingPostalCode
+FROM
+    employees e
+JOIN
+    customers c ON e.EmployeeId = c.SupportRepId
+JOIN
+ invoices i ON c.CustomerId = i.CustomerId;
+    
+
+SELECT
+    i.InvoiceId,
+    c.FirstName || ' ' || c.LastName AS CustomerName,
+    c.Country,
+    e.FirstName || ' ' || e.LastName AS SalesAgentName,
+    SUM(ii.UnitPrice * ii.Quantity) AS InvoiceTotal
+FROM
+    invoices i
+JOIN
+    customers c ON i.CustomerId = c.CustomerId
+JOIN
+    employees e ON c.SupportRepid = e.EmployeeId
+JOIN
+    invoice_items ii ON i.InvoiceId = ii.InvoiceId
+GROUP BY
+    i.InvoiceId, CustomerName, c.Country, SalesAgentName
+ORDER BY SalesAgentName ASC;
+
+
+SELECT Count(*) AS NumberOfInvoices
+FROM invoices
+WHERE InvoiceDate like '%2009%';
+
+
+SELECT SUM(Quantity*UnitPrice)
+FROM invoices i
+JOIN invoice_items ii
+On i.InvoiceId=ii.InvoiceLineId
+WHERE InvoiceDate Like '%2009%'
+
+SELECT track.name as PurchasedTrackName, Inv.InvoiceLineId
+FROM tracks track
+Left join Invoice_items Inv
+On track.TrackId=Inv.TrackId
+
+SELECT
+    ii.InvoiceLineId,
+    t.Name AS TrackName,
+    a.Name AS ArtistName
+FROM
+    Invoice_items ii
+JOIN
+    Tracks t ON ii.TrackId = t.TrackId
+JOIN
+    Albums al ON t.AlbumId = al.AlbumId
+JOIN
+    Artists a ON al.ArtistId = a.ArtistId;
+    
+
+
+SELECT T.Name as TrackName, A.Title as AlbumName, M.Name as Type, G.Name as Genre
+FROM tracks T
+JOIN albums A
+ON T.AlbumId=A.AlbumId
+Join media_types M
+ON T.MediaTypeId=M.MediaTypeId
+JOIN genres G
+ON T.GenreId=G.GenreId
+
+
+SELECT SUM(UnitPrice*Quantity) AS Total, e.FirstName ||' '|| e.LastName as SalesAgentName
+FROM invoice_items ii
+Join invoices i
+ON ii.InvoiceId=i.InvoiceId
+Join Customers c
+ON i.CustomerId=C.CustomerId
+JOIN employees e
+ON c.SupportRepId=e.EmployeeId
+GROUP by SalesAgentName
+
+
+
+
+
+
