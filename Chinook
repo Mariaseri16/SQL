@@ -1,27 +1,46 @@
+#I'm going to work with a dataset called chinook, which represents a digital media store and includes tables for artists, albums, media tracks, invoices, and customers.
+
+
+#Info
+#employees table stores employees data such as employee id, last name, first name, etc. It also has a field 
+named ReportsTo to specify who reports to whom.
+#customers table stores customers data. The line between employees.Employeeid and customers.
+SupportRepID shows how the two tables are related (ie, how you would JOIN them).
+#The invoices table stores invoice header data (Customer ID, Billing Address, etc) and the invoice_items table
+stores the invoice line items data (Unit Price, Quantity).
+#artists table stores artists data.
+#albums table stores data about a list of tracks. Each album belongs to one artist.
+However, one artist may have multiple albums.
+#media_types table stores media types such as MPEG audio and AAC audio files.
+#genres table stores music types such as rock, jazz, metal, etc.
+#tracks table stores the data of songs. Each track belongs to one album.
+#playlists table store data about playlists. Each playlist contains a list of tracks. Each track may belong to multiple playlists. 
+The relationship between the playlists table and tracks table is many-to-many. The playlist_track table is used to reflect this relationship.
+
+#how Customers (their full names, customer ID, and country) who are not in the US. 
 SELECT FirstName, LastName, CustomerId, Country
 FROM chinook.customers
 WHERE Country != 'USA'
 Order by Country
 
+#Show only the Customers from Brazil.
 SELECT *
 FROM chinook.customers
 WHERE Country = 'Brazil'
 
-
+#Find the Invoices of customers who are from Brazil. The resulting table should show the customer's full name, Invoice ID, Date of the invoice, and billing country.
 Select Cust.FirstName, Cust.LastName, Inv.InvoiceId, Inv.InvoiceDate, Inv.BillingCountry
 FROM chinook.customers Cust
 LEFT JOIN chinook.invoices Inv
-ON Cust.CustomerId=Inv.CUstomerId
+ON Cust.CustomerId=Inv.CustomerId
 WHERE Country='Brazil'
 Order by FirstName ASC
 
-SELECT *
-FROM chinook.employees
-WHERE Title = 'IT Staff'
-
+#Find a unique/distinct list of billing countries from the Invoice table
 SELECT DISTINCT BillingAddress AS BillingCountry
 FROM Invoices;
 
+#Provide a query that shows the invoices associated with each sales agent. The resulting table should include the Sales Agent's full name.
 SELECT
     e.EmployeeId,
     e.FirstName || ' ' || e.LastName AS SalesAgentName,
@@ -38,7 +57,7 @@ JOIN
 JOIN
  invoices i ON c.CustomerId = i.CustomerId;
     
-
+#Show the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers.
 SELECT
     i.InvoiceId,
     c.FirstName || ' ' || c.LastName AS CustomerName,
@@ -57,56 +76,25 @@ GROUP BY
     i.InvoiceId, CustomerName, c.Country, SalesAgentName
 ORDER BY SalesAgentName ASC;
 
-
-SELECT Count(*) AS NumberOfInvoices
-FROM invoices
-WHERE InvoiceDate like '%2009%';
-
-
-SELECT SUM(Quantity*UnitPrice)
-FROM invoices i
-JOIN invoice_items ii
-On i.InvoiceId=ii.InvoiceLineId
-WHERE InvoiceDate Like '%2009%'
-
-SELECT track.name as PurchasedTrackName, Inv.InvoiceLineId
-FROM tracks track
-Left join Invoice_items Inv
-On track.TrackId=Inv.TrackId
-
-SELECT
-    ii.InvoiceLineId,
-    t.Name AS TrackName,
-    a.Name AS ArtistName
-FROM
-    Invoice_items ii
-JOIN
-    Tracks t ON ii.TrackId = t.TrackId
-JOIN
-    Albums al ON t.AlbumId = al.AlbumId
-JOIN
-    Artists a ON al.ArtistId = a.ArtistId;
-    
-
-
+#Provide a query that shows all the Tracks, and include the Album name, Media type, and Genre.
 SELECT T.Name as TrackName, A.Title as AlbumName, M.Name as Type, G.Name as Genre
 FROM tracks T
-JOIN albums A
-ON T.AlbumId=A.AlbumId
-Join media_types M
-ON T.MediaTypeId=M.MediaTypeId
-JOIN genres G
-ON T.GenreId=G.GenreId
+JOIN 
+    albums A ON T.AlbumId=A.AlbumId
+Join
+    media_types M ON T.MediaTypeId=M.MediaTypeId
+JOIN 
+    genres G ON T.GenreId=G.GenreId
 
-
+#Show the total sales made by each sales agent
 SELECT SUM(UnitPrice*Quantity) AS Total, e.FirstName ||' '|| e.LastName as SalesAgentName
 FROM invoice_items ii
-Join invoices i
-ON ii.InvoiceId=i.InvoiceId
-Join Customers c
-ON i.CustomerId=C.CustomerId
-JOIN employees e
-ON c.SupportRepId=e.EmployeeId
+Join
+    invoices i ON ii.InvoiceId=i.InvoiceId
+Join
+    Customers c ON i.CustomerId=C.CustomerId
+JOIN
+    employees e ON c.SupportRepId=e.EmployeeId
 GROUP by SalesAgentName
 
 
